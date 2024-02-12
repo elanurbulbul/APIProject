@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css' ;
+import SearchHeader from './SearchHeader';
+import searchImages from './Api';
+import { useState } from 'react';
+import ImageList from './compenents/imageList';
 
 function App() {
+  const [images, setImages] = useState([])
+  const handleSubmit= async (term) =>{
+    const result = await searchImages(term);
+    //bir yerden cevap alanaka kadar await kullanıyoruz ve arrow function async y çevirmeliyiz
+    setImages(result);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      <SearchHeader search={handleSubmit}/>
+      <ImageList imagesPlaceholder={images}></ImageList>
+       {/* Array içindki 10 objeyi imagesPlaceholder adlı props ile imageliste geçiyorum */}
+  </div>
+)
 
+}
 export default App;
